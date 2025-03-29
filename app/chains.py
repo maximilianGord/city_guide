@@ -19,40 +19,19 @@ class Chain:
             timeout=None,
             max_retries=2,
         )
-    def extract_jobs(self, web_text_cleaned, search_item):
-        prompt_extract = PromptTemplate.from_template(
-            """
-            ### SCRAPED TEXT FROM WEBSITE:
-            {page_data}
-            ### INSTRUCTION:
-            The scraped text is from wikipedia site of {search}.
-            Your job is to extract the places, buildings or cites which a tourist would find interesting. Return them in JSON format containing the 
-            following keys: `name`, `type`, `description`, 'history'. The key "type" is a categorical key. The corresponding categories are : history, art, culture, architecture, general.
-            Only return the valid JSON.
-            ### VALID JSON (NO PREAMBLE):    
-        """
-        )
-        chain_extract = prompt_extract | self.llm 
-        try :
-            res = chain_extract.invoke(input={'page_data':web_text_cleaned, 'search':search_item})
-        except Exception as e:
-            raise Exception("'Request too large for {}. The limit is {}.{} were found ".format(self.model, str(6000),len(web_text_cleaned)))
-        #12847
-        try:
-            json_parser = JsonOutputParser()
-            json_res = json_parser.parse(res.content)
-        except OutputParserException:
-            raise OutputParserException("Context too big. Unable to parse jobs.")
-        return json_res if isinstance(json_res, list) else [json_res]
     
-    def write_recommendation(self, places, interests, search_item):
+    
+    
+    def write_recommendation(self, names,description, interests, search_item, language):
         prompt_email = PromptTemplate.from_template(
             """
-            ### Tourist Spot DESCRIPTION:
-            {places}
+            ### Tourist Spot Place names:
+            {names}
+            ### Tourist Spot Place names:
+            {description}
 
             ### INSTRUCTION:
-            You are Thomas, a city guide for the city {search_item}. Please recommend the given tourist spots to an user. It has to be clear to the Tourists which are the three mentioned spots and why they are interesting.
+            You are  a friendly city guide for the city {search_item}. Choose a common local name for youself .You guide people that speak the language {language}. Talk to them in {language}. Please recommend the given tourist spots to an user. It has to be clear to the Tourists which are the three mentioned spots and why they are interesting.
             Remember to keep the Tourists interests {interests} in mind.
             Also try to tell them about this spots in an interesting way, like a City Guide. 
             Do not provide a preamble.
@@ -61,7 +40,7 @@ class Chain:
             """
         )
         chain_email = prompt_email | self.llm
-        res = chain_email.invoke({"interests": interests, "places": places, "search_item":search_item})
+        res = chain_email.invoke({"interests": str(interests), "names": str(names),"description":description, "search_item":search_item,"language":language})
         return res.content
     
     
