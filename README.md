@@ -8,8 +8,11 @@ This repository contains an GenAI project that can recommend a user a sight in a
 
 How to run this project
 
-1) Clone this project 
+1) Clone this project and navigate into the city_guide folder
 2) Go to groq.com and get an API Key. 
 3) create a file called .env in the App folder and write GROQ_API_KEY="your api key here"
-4) Install streamlit with : pip install streamlit_chat 
-5) Run this project by running streamlit run app/main.py
+4) pip install poetry
+5) poetry lock if you add something to pyproject.toml
+5) poetry sync --no-root
+6) Install streamlit with : pip install streamlit_chat 
+7) Run this project by running poetry run streamlit run app/main.py
