@@ -1,6 +1,6 @@
-This repository contains an GenAI project that can recommend a user a sight in a city, given the location and personal preference
+This repository contains an GenAI project that helps a User to explore a new city and gives him historic information
 
-1) The next goal is to make the the conversation with a Chatbot more interactive. Right now the user gives fiels inputs, the programm searches for necessary information on Wikipedia and creates an answer. Aiming for a more chatbot like experience by using langgraph.
+1) The next goal is to make the the conversation with a Chatbot more interactive. Right now the user gives field inputs, the programm searches for necessary information on Wikipedia and creates an answer. Aiming for a more chatbot like experience by using langgraph.
 2) Search on more websites.
 3) Give also a route through the city
 
