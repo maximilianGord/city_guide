@@ -6,7 +6,7 @@ This repository contains an GenAI project that helps a User to explore a new cit
 
 
 
-How to run this project
+How to run this project in terminal
 
 1) Clone this project and navigate into the city_guide folder
 2) Go to groq.com and get an API Key. 
