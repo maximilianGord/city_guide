@@ -172,6 +172,7 @@ def get_city_coordinates(city:str = "München"):
     node(area.searchArea)["place"="city"];
     out center;
     """.format(city)
+    print("The city is "+city)
     response = requests.get(url, params={"data": query})
     data = response.json()
     print(data)
